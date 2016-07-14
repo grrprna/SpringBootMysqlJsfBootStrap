@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"> 
+<h:head>
+	<f:facet name="first">
+			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+            <meta name="viewport" content="width=device-width, initial-scale=1" />	
+            <h:outputStylesheet library="webjars" name="bootstrap/3.3.6/css/bootstrap.min-jsf.css" />
+   			<h:outputStylesheet library="webjars" name="bootstrap/3.3.6/css/bootstrap-theme.min-jsf.css" />
+   			<h:outputStylesheet library="webjars" name="font-awesome/4.5.0/css/font-awesome.min-jsf.css" />
+			<title> Deneme </title>
+	</f:facet>
+</h:head> 
+<h:body> 
+	<div class="container">
+		<div class="navbar navbar-inverse">
+				<h:form>  
+				
+                    <h:commandLink styleClass="navbar-brand"><i class="glyphicon glyphicon-home"></i></h:commandLink>
+                   
+               </h:form>
+			<div id="navbar" class="navbar-collapse collapse">
+                <h:form class="navbar-right">
+                    <h:outputLabel  value="Welcome" styleClass="navbar-brand"/>
+                </h:form>
+			 </div>
+			
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h:form styleClass="form-horizontal">
+					<div class="form-group">
+						<h:outputLabel for="txt_id" value="Emp-Id" styleClass="control-label col-sm-2"/>
+						<div class="col-sm-10">
+							<h:inputText id="txt_id" value="#{employeeView.employee.empID}" styleClass="form-control"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel for="txt_name" value="Emp-Name" styleClass="control-label col-sm-2"/>
+						<div class="col-sm-10">
+							<h:inputText id="txt_name" value="#{employeeView.employee.empName}" styleClass="form-control"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel for="txt_hiredate" value="HireDate" styleClass="control-label col-sm-2"/>
+						<div class="col-sm-10">
+							<h:inputText id="txt_hiredate" value="#{employeeView.employee.empHireDate}" styleClass="form-control"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<h:outputLabel for="txt_salary" value="Salary" styleClass="control-label col-sm-2"/>
+						<div class="col-sm-10">
+							<h:inputText id="txt_salary" value="#{employeeView.employee.salary}" styleClass="form-control"/>
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-offset-11 col-sm-10">
+						<h:commandButton id="btn_save" value="Save" action="#{employeeView.saveEmployee}"
+	                                 process=":form:newEmployee"
+	                                 update=":form:newEmployee :form:employeeList " styleClass="btn btn-default">
+	                </h:commandButton>
+	                </div>
+					</div>
+				</h:form>
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th>Emp ID</th>
+							<th>Emp Name</th>
+							<th>Emp Hire Date</th>
+							<th>Salary</th>
+							<th></th>
+							<th></th>
+						</tr>
+					</thead>
+					<tbody>
+						<ui:repeat var="stud" value="#{employeeView.employeeList}">
+							<tr>
+								<td>#{stud.empID}</td>
+								<td>#{stud.empName}</td>
+								<td>#{stud.empHireDate}</td>
+								<td>#{stud.salary}</td>
+								<td>
+									<h:form>
+										<h:commandButton value="Edit"  process="@this" update=":form:newEmployee" styleClass="btn btn-default">
+										
+                       					<f:setPropertyActionListener value="#{stud}" target="#{employeeView.employee}" />
+                       					
+                  						</h:commandButton>
+									</h:form>
+								</td>
+								<td>
+									<h:form>
+										<h:commandLink action="#{employeeView.deleteEmployee(stud)}" process="@this">
+											<i class="glyphicon glyphicon-remove-circle" ></i>
+										</h:commandLink>
+									</h:form>
+								</td>
+							</tr>
+						</ui:repeat>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</h:body> 
+</html>
